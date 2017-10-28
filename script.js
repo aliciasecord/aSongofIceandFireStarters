@@ -4,27 +4,20 @@ let deadList = document.getElementById("dead");
 aliveList.innerHTML=""
 deadList.innerHTML=""
 
-// find all the pages
-pages = []
-function pushPages(){
-  for (i=1; i<35; i++){
-    pages.push(i);
-  }
-}
-pushPages();
-
 // search for names and call functions
 function doAliveSearch (){
-  for (p in pages) {
-    let isAlive = 'https://www.anapioficeandfire.com/api/characters?page='+pages[p]+'&pageSize=50&isAlive=true';
-    axios(isAlive).then(response => {loopAlive(response.data)})
+  let page = 1;
+  while (page < 35) {
+    let isAlive = 'https://www.anapioficeandfire.com/api/characters?page='+page+'&pageSize=50&isAlive=true';
+    axios(isAlive).then(response => {loopAlive(response.data)}).then(page ++);
   }
 }
 
 function doDeadSearch(){
-  for (p in pages) {
-    let notAlive = 'https://www.anapioficeandfire.com/api/characters?page='+pages[p]+'&pageSize=50&isAlive=false';
-    axios(notAlive).then(response => {loopDead(response.data)})
+  let page = 1;
+  while (page < 15) {
+    let notAlive = 'https://www.anapioficeandfire.com/api/characters?page='+page+'&pageSize=50&isAlive=false';
+    axios(notAlive).then(response => {loopDead(response.data)}).then(page++)
   }
 }
 
